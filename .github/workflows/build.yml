@@ -13,8 +13,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Ensures you fetch all history for .git commands
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -25,6 +23,7 @@ jobs:
 
       - name: Build
         run: cargo build --release
+
       - name: List output
         run: ls -R target/release
 
@@ -32,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }}-executable
-          path: target/release/ch_points
+          path: target/release/ch_points${{ runner.os == 'Windows-latest' && '.exe' || '' }}
