@@ -1,4 +1,4 @@
-# ch_points
+# 🍁 ch_points
 
 Get the current Canadian Highlander points value of a given Moxfield deck. The points are sourced from [the official website](https://www.canadianhighlander.ca/points-list/).
 
