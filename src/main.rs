@@ -76,6 +76,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
     }
+    // Sort by points value
+    pointed_cards.sort_by(|a, b| b.1.cmp(&a.1));
 
     // Print pointed cards in the desired format
     let pointed_cards_formatted: Vec<String> = pointed_cards
