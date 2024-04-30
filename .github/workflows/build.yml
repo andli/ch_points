@@ -25,6 +25,8 @@ jobs:
 
       - name: Build
         run: cargo build --release
+      - name: List output
+        run: ls -R target/release
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
