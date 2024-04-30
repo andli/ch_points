@@ -30,9 +30,15 @@ jobs:
       - name: List output
         run: ls -R target/release
 
+      - name: Zip Executable
+        run: |
+          ZIP_NAME="ch_points_${{ runner.os }}.zip"
+          cd target/release
+          zip $ZIP_NAME ${{ env.EXECUTABLE_NAME }}
+
       - name: Upload Executable to Release
         uses: softprops/action-gh-release@v1
         with:
-          files: target/release/${{ env.EXECUTABLE_NAME }}
+          files: target/release/ch_points_${{ runner.os }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
