@@ -11,7 +11,7 @@ Get the id from the Moxfield URL:
 `https://www.moxfield.com/decks/[id]`
 
 Run the executable with the id as argument:
-`ch_points [id]`
+`./ch_points [id]`
 
 Profit:
 `Points: 8 (Mox Pearl [3], Strip Mine [2], Mox Emerald [3])`
