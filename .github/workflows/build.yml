@@ -32,15 +32,13 @@ jobs:
 
       - name: Zip Executable
         run: |
-          if [ "${{ runner.os }}" = "Windows-latest" ]; then
-            $env:ZIP_NAME="ch_points_${{ runner.os }}.zip"
-            Compress-Archive -Path "target/release/${{ env.EXECUTABLE_NAME }}" -DestinationPath "target/release/$env:ZIP_NAME"
+          if [ "${{ runner.os }}" == "Windows-latest" ]; then
+            Compress-Archive -Path "target/release/${{ env.EXECUTABLE_NAME }}" -DestinationPath "target/release/ch_points_${{ runner.os }}.zip"
           else
-            ZIP_NAME="ch_points_${{ runner.os }}.zip"
             cd target/release
-            zip $ZIP_NAME ${{ env.EXECUTABLE_NAME }}
+            zip "ch_points_${{ runner.os }}.zip" "${{ env.EXECUTABLE_NAME }}"
           fi
-        shell: bash | pwsh
+        shell: bash {0}
 
       - name: Upload Executable to Release
         uses: softprops/action-gh-release@v1
