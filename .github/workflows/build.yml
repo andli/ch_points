@@ -3,7 +3,6 @@ name: Build Executable
 on:
   release:
     types: [created]
-
 jobs:
   build:
     strategy:
@@ -30,16 +29,22 @@ jobs:
       - name: List output
         run: ls -R target/release
 
-      - name: Zip Executable
+      # Zip files on macOS and Linux
+      - name: Zip Executable (macOS/Linux)
+        if: runner.os != 'Windows-latest'
         run: |
-          if [ "${{ runner.os }}" == "Windows-latest" ]; then
-            Compress-Archive -Path "target/release/${{ env.EXECUTABLE_NAME }}" -DestinationPath "target/release/ch_points_${{ runner.os }}.zip"
-          else
-            cd target/release
-            zip "ch_points_${{ runner.os }}.zip" "${{ env.EXECUTABLE_NAME }}"
-          fi
-        shell: bash {0}
+          cd target/release
+          zip "ch_points_${{ runner.os }}.zip" "${{ env.EXECUTABLE_NAME }}"
+        shell: bash
 
+      # Zip files on Windows
+      - name: Zip Executable (Windows)
+        if: runner.os == 'Windows-latest'
+        run: |
+          Compress-Archive -Path "target/release/${{ env.EXECUTABLE_NAME }}" -DestinationPath "target/release/ch_points_${{ runner.os }}.zip"
+        shell: powershell
+
+      # Upload Executable to Release
       - name: Upload Executable to Release
         uses: softprops/action-gh-release@v1
         with:
