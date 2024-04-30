@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }}-executable
-          path: target/release/chpoints
+          path: target/release/ch_points
