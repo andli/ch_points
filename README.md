@@ -1,5 +1,10 @@
 # ch_points
-Get the current Canadian Highlander points value of a given Moxfield deck.
+
+Get the current Canadian Highlander points value of a given Moxfield deck. The points are sourced from [the official website](https://www.canadianhighlander.ca/points-list/).
+
+## Installation
+
+No need, just run the executable found in the releases of this repo or build the project yourself.
 
 ## Usage
 Get the id from the Moxfield URL:
