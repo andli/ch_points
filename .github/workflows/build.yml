@@ -21,6 +21,9 @@ jobs:
           profile: minimal
           override: true
 
+      - name: Set executable name
+        run: echo "EXECUTABLE_NAME=ch_points${{ runner.os == 'Windows-latest' && '.exe' || '' }}" >> $GITHUB_ENV
+
       - name: Build
         run: cargo build --release
 
@@ -31,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }}-executable
-          path: target/release/ch_points${{ runner.os == 'Windows-latest' && '.exe' || '' }}
+          path: target/release/${{ env.EXECUTABLE_NAME }}
