@@ -4,7 +4,7 @@ Get the current Canadian Highlander points value of a given Moxfield deck. The p
 
 ## Installation
 
-No need, just run the executable found in the releases of this repo or build the project yourself.
+No need, just run the executable found in the [releases](https://github.com/andli/ch_points/releases) of this repo or build the project yourself.
 
 ## Usage
 Get the id from the Moxfield URL:
