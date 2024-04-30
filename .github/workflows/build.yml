@@ -30,8 +30,9 @@ jobs:
       - name: List output
         run: ls -R target/release
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+      - name: Upload Executable to Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: ${{ runner.os }}-executable
-          path: target/release/${{ env.EXECUTABLE_NAME }}
+          files: target/release/${{ env.EXECUTABLE_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
