@@ -40,7 +40,8 @@ jobs:
       - name: Zip Executable (Windows)
         if: runner.os == 'Windows-latest'
         run: |
-          Compress-Archive -Path "target/release/${{ env.EXECUTABLE_NAME }}" -DestinationPath "target/release/ch_points_${{ runner.os }}.zip"
+          cd target/release
+          Compress-Archive -Path "${{ env.EXECUTABLE_NAME }}" -DestinationPath "ch_points_${{ runner.os }}.zip"
         shell: pwsh
 
       - name: Upload Executable to Release
