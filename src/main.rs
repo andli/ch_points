@@ -29,7 +29,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Get deck ID from command line arguments
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
-        return Err("Usage: cargo run <deck_id>".into());
+        return Err("Usage: cargo run <moxfield_deck_id>".into());
     }
     let deck_id = &args[1];
 
