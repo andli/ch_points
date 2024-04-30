@@ -27,10 +27,10 @@ jobs:
       - name: Build
         run: cargo build --release
 
-      - name: List output
-        run: ls -R target/release
+      - name: Output OS
+        run: echo "Running on ${{ runner.os }}"
 
-      - name: Zip Executable (macOS/Linux)
+      - name: Zip Executable (Non-Windows)
         if: runner.os != 'Windows-latest'
         run: |
           cd target/release
