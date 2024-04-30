@@ -9,4 +9,6 @@ Run the executable with the id as argument:
 `ch_points [id]`
 
 Profit:
-``
+`Points: 8 (Mox Pearl [3], Strip Mine [2], Mox Emerald [3])`
+
+This text line can then be entered manually in the description of your deck on Moxfield.
