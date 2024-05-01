@@ -84,7 +84,7 @@ fn fetch_points_list(
             // replace ’ with ' to be compatible with Moxfield data
         }
     }
-    println!("{:?}", points_map);
+    //println!("{:?}", points_map);
     Ok(points_map)
 }
 
