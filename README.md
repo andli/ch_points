@@ -14,6 +14,8 @@ Run the executable with the id as argument:
 `./ch_points [id]`
 
 Profit:
-`Points: 8 (Mox Pearl [3], Strip Mine [2], Mox Emerald [3])`
+`Points: 10 (Time Vault [7], Mana Vault [1], Tainted Pact [1], Tolarian Academy [1])`
 
-This text line can then be entered manually in the description of your deck on Moxfield.
+This text line can then be entered manually in the description of your deck on Moxfield:
+
+![image info](./example.png)

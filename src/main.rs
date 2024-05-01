@@ -98,6 +98,7 @@ fn calculate_deck_points(deck: &Deck, points_map: &HashMap<String, u8>) -> (i32,
             }
         }
     }
+    pointed_cards.sort(); //sort alphabetically first
     pointed_cards.sort_by(|a, b| b.1.cmp(&a.1));
     let pointed_cards_formatted: Vec<String> = pointed_cards
         .iter()
