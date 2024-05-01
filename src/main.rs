@@ -4,6 +4,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::env;
 use std::error::Error;
+use std::io::{self, Write};
 
 #[derive(Deserialize, Debug)]
 struct Deck {
@@ -44,7 +45,17 @@ fn main() -> Result<(), Box<dyn Error>> {
 fn parse_deck_id() -> Result<String, Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
-        return Err("Usage: cargo run <moxfield_deck_id>".into());
+        // Prompt user for the deck ID
+        println!("Please enter the Moxfield deck ID:");
+        io::stdout().flush()?; // Ensure the prompt is displayed immediately
+        let mut deck_id = String::new();
+        io::stdin().read_line(&mut deck_id)?;
+        // Trim whitespace and check if the input is not empty
+        let deck_id = deck_id.trim();
+        if deck_id.is_empty() {
+            return Err("No deck ID provided. Usage: cargo run <moxfield_deck_id>".into());
+        }
+        return Ok(deck_id.to_string());
     }
     Ok(args[1].clone())
 }
