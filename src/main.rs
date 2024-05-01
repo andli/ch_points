@@ -80,9 +80,11 @@ fn fetch_points_list(
                     eprintln!("Failed to parse points for a card.");
                     0
                 });
-            points_map.insert(card_name.trim().to_string(), points);
+            points_map.insert(card_name.trim().replace('’', "'").to_string(), points);
+            // replace ’ with ' to be compatible with Moxfield data
         }
     }
+    println!("{:?}", points_map);
     Ok(points_map)
 }
 
@@ -90,7 +92,9 @@ fn calculate_deck_points(deck: &Deck, points_map: &HashMap<String, u8>) -> (i32,
     let mainboard = deck.boards.get("mainboard").expect("Mainboard not found");
     let mut total_points: u8 = 0;
     let mut pointed_cards = Vec::new();
+    //println!("Mainboard:");
     for (_, card) in &mainboard.cards {
+        //println!("{}", &card.card.name);
         if let Some(&points) = points_map.get(&card.card.name) {
             if points > 0 {
                 pointed_cards.push((card.card.name.clone(), points));
