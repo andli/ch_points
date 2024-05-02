@@ -27,9 +27,10 @@ pub mod api {
 
     pub fn fetch_deck_data(
         client: &reqwest::blocking::Client,
+        base_url: &str,
         deck_id: &str,
     ) -> Result<Deck, Box<dyn Error>> {
-        let url = format!("https://api2.moxfield.com/v3/decks/all/{}", deck_id);
+        let url = format!("{}/v3/decks/all/{}", base_url, deck_id);
         let response = client.get(&url).send()?;
         let deck = response.json()?;
         Ok(deck)

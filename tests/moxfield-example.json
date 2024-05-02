@@ -1,0 +1,18 @@
+{
+    "boards": {
+        "mainboard": {
+            "cards": {
+                "EbPg6": {
+                    "card": {
+                        "name": "Black Lotus"
+                    }
+                },
+                "Xdf8ws": {
+                    "card": {
+                        "name": "Mox Jet"
+                    }
+                }
+            }
+        }
+    }
+}

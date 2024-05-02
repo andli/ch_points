@@ -13,7 +13,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let deck_id = parse_deck_id()?;
     let client = reqwest::blocking::Client::new();
-    let deck = fetch_deck_data(&client, &deck_id)?;
+    let base_url = "https://api2.moxfield.com/";
+    let deck = fetch_deck_data(&client, &base_url, &deck_id)?;
     let points_map = fetch_points_list(&client)?;
     let (total_points, pointed_cards_formatted) = calculate_deck_points(&deck, &points_map);
 
