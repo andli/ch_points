@@ -1,7 +1,8 @@
 use reqwest;
 use scraper::{Html, Selector};
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
+
 use std::env;
 use std::error::Error;
 use std::io::{self, Write};
@@ -27,6 +28,11 @@ struct CardInfo {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
+    let args: Vec<String> = env::args().collect();
+    if args.contains(&"--list".to_string()) {
+        return list_pointed_cards();
+    }
+
     let deck_id = parse_deck_id()?;
     let client = reqwest::blocking::Client::new();
     let deck = fetch_deck_data(&client, &deck_id)?;
@@ -39,6 +45,15 @@ fn main() -> Result<(), Box<dyn Error>> {
         pointed_cards_formatted.join(", ")
     );
 
+    Ok(())
+}
+
+fn list_pointed_cards() -> Result<(), Box<dyn Error>> {
+    let client = reqwest::blocking::Client::new();
+    let points_map = fetch_points_list(&client)?;
+    for (card, points) in points_map {
+        println!("{}\t{}", points, card);
+    }
     Ok(())
 }
 
@@ -72,13 +87,13 @@ fn fetch_deck_data(
 
 fn fetch_points_list(
     client: &reqwest::blocking::Client,
-) -> Result<HashMap<String, u8>, Box<dyn Error>> {
+) -> Result<BTreeMap<String, u8>, Box<dyn Error>> {
     let points_url = "https://www.canadianhighlander.ca/points-list/";
     let points_html = client.get(points_url).send()?.text()?;
     let points_doc = Html::parse_document(&points_html);
     let selector = Selector::parse("tr").unwrap();
 
-    let mut points_map = HashMap::new();
+    let mut points_map = BTreeMap::new();
     for element in points_doc.select(&selector) {
         let td_elements: Vec<_> = element.select(&Selector::parse("td").unwrap()).collect();
         if td_elements.len() >= 2 {
@@ -95,11 +110,12 @@ fn fetch_points_list(
             // replace ’ with ' to be compatible with Moxfield data
         }
     }
-    //println!("{:?}", points_map);
+
+    //println!("{:?}", points);
     Ok(points_map)
 }
 
-fn calculate_deck_points(deck: &Deck, points_map: &HashMap<String, u8>) -> (i32, Vec<String>) {
+fn calculate_deck_points(deck: &Deck, points_map: &BTreeMap<String, u8>) -> (i32, Vec<String>) {
     let mainboard = deck.boards.get("mainboard").expect("Mainboard not found");
     let mut total_points: u8 = 0;
     let mut pointed_cards = Vec::new();
