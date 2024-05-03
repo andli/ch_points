@@ -1,5 +1,6 @@
 pub mod api {
 
+    use reqwest::blocking::Client;
     use scraper::{Html, Selector};
     use serde::Deserialize;
     use std::collections::{BTreeMap, HashMap};
@@ -25,13 +26,36 @@ pub mod api {
         pub name: String,
     }
 
+    #[derive(Debug)]
+    pub struct HttpError(reqwest::StatusCode);
+
+    impl HttpError {
+        // Public method to get the status code
+        pub fn status_code(&self) -> reqwest::StatusCode {
+            self.0
+        }
+    }
+
+    impl std::fmt::Display for HttpError {
+        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            write!(f, "HTTP Error: {}", self.0)
+        }
+    }
+
+    impl Error for HttpError {}
+
     pub fn fetch_deck_data(
-        client: &reqwest::blocking::Client,
+        client: &Client,
         base_url: &str,
         deck_id: &str,
     ) -> Result<Deck, Box<dyn Error>> {
         let url = format!("{}/v3/decks/all/{}", base_url, deck_id);
         let response = client.get(&url).send()?;
+
+        if !response.status().is_success() {
+            return Err(Box::new(HttpError(response.status())));
+        }
+
         let deck = response.json()?;
         Ok(deck)
     }
