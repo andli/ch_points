@@ -1,3 +1,5 @@
+use clipboard::ClipboardContext;
+use clipboard::ClipboardProvider;
 use std::collections::BTreeMap;
 use std::env;
 use std::error::Error;
@@ -18,11 +20,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     let points_map = fetch_points_list(&client)?;
     let (total_points, pointed_cards_formatted) = calculate_deck_points(&deck, &points_map);
 
-    println!(
+    let print_str = format!(
         "Points: {} ({})",
         total_points,
         pointed_cards_formatted.join(", ")
     );
+    let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+    ctx.set_contents(print_str.to_owned()).unwrap();
+    println!("{}", print_str);
 
     Ok(())
 }
